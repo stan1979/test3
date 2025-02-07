@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Facts Quiz</title>
+    <style>
+        body {
+            background-image: url('cat.png');
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .quiz-container {
+            margin: 100px auto;
+            width: 80%;
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .result {
+            color: #00FF00;
+        }
+        .wrong {
+            color: #FF0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Cat Facts Quiz</h1>
+        <form id="quizForm">
+            <div>
+                <label><input type="radio" name="question" value="1"> Cats have five toes on their front paws.</label><br>
+                <label><input type="radio" name="question" value="0"> Cats can taste sweetness.</label><br>
+                <label><input type="radio" name="question" value="0"> Cats always land on their feet.</label><br>
+            </div>
+            <button type="button" onclick="checkAnswer()">Check</button>
+        </form>
+        <div>
+            <p>Correct Answer: <span id="correctCount">0</span></p>
+            <p>Wrong Answer: <span id="wrongCount">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Load previous values from local storage
+        document.getElementById('correctCount').textContent = localStorage.getItem('correctCount') || '0';
+        document.getElementById('wrongCount').textContent = localStorage.getItem('wrongCount') || '0';
+
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector('input[name="question"]:checked');
+            if (selectedAnswer) {
+                const correctCount = document.getElementById('correctCount');
+                const wrongCount = document.getElementById('wrongCount');
+
+                if (selectedAnswer.value === '1') {
+                    correctCount.textContent = parseInt(correctCount.textContent) + 1;
+                    correctCount.classList.add('result');
+                } else {
+                    wrongCount.textContent = parseInt(wrongCount.textContent) + 1;
+                    wrongCount.classList.add('wrong');
+                }
+
+                // Save values to local storage
+                localStorage.setItem('correctCount', correctCount.textContent);
+                localStorage.setItem('wrongCount', wrongCount.textContent);
+            } else {
+                alert('Please select an answer.');
+            }
+        }
+    </script>
+</body>
+</html>
